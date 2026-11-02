@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TimeLineElement from "../components/cv/TimeLine.astro";
+import { PROFILE, EXPERIENCE, EDUCATION, SKILLS, LANGUAGES, OUTSIDE_THE_LAB } from "../data/site";
+---
+
+<BaseLayout title="CV | Sinan Emre" sideBarActiveItemID="cv">
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-8">
+    <h1 class="text-3xl font-bold font-display">CV</h1>
+    <div class="flex flex-wrap gap-2">
+      <a class="btn btn-primary btn-sm" href={PROFILE.cvResearch} target="_blank">PDF: research CV</a>
+      <a class="btn btn-outline btn-sm" href={PROFILE.cvIndustry} target="_blank">PDF: industry CV</a>
+    </div>
+  </div>
+
+  <h2 class="text-2xl font-bold font-display mb-5">Experience</h2>
+  <div class="time-line-container mb-10">
+    {EXPERIENCE.map((e) => <TimeLineElement title={e.title} subtitle={`${e.when} · ${e.where}`}>{e.text}</TimeLineElement>)}
+  </div>
+
+  <h2 class="text-2xl font-bold font-display mb-5">Education</h2>
+  <div class="time-line-container mb-10">
+    {EDUCATION.map((e) => <TimeLineElement title={e.title} subtitle={`${e.when} · ${e.where}`}>{e.text}</TimeLineElement>)}
+  </div>
+
+  <h2 class="text-2xl font-bold font-display mb-4">Skills</h2>
+  <div class="flex flex-wrap gap-2 mb-10">
+    {SKILLS.map((s) => <span class="badge badge-outline py-3 px-3">{s}</span>)}
+  </div>
+
+  <h2 class="text-2xl font-bold font-display mb-2">Languages</h2>
+  <p class="mb-10">{LANGUAGES}</p>
+
+  <h2 class="text-2xl font-bold font-display mb-2">Outside the lab</h2>
+  <p class="mb-4">{OUTSIDE_THE_LAB}</p>
+</BaseLayout>

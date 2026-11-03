@@ -15,12 +15,9 @@ const groups = [
       <section class={i ? "mt-12" : ""}>
         <h1 class="text-3xl font-bold font-display">{g.title}</h1>
         <p class="opacity-70 mb-4">{g.sub}</p>
-        {g.items.map((p) => (
-          <>
-            <HorizontalCard title={p.title} img={p.img} desc={p.desc} url={p.url} badge={p.badge} />
-            <div class="divider my-0" />
-          </>
-        ))}
+        <div class="flex flex-col gap-4">
+          {g.items.map((p) => <HorizontalCard title={p.title} img={p.img} full={p.full} desc={p.desc} url={p.url} badge={p.badge} />)}
+        </div>
       </section>
     ))
   }

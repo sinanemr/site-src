@@ -1,0 +1,27 @@
+---
+// Shows a piece of text and turns the first mention of each place in PLACES (src/data/site.ts) into a link.
+import { PLACES } from "../data/site";
+
+const { text } = Astro.props as { text: string };
+
+type Part = string | { name: string; url: string };
+const parts: Part[] = [text];
+
+for (const place of PLACES) {
+  const i = parts.findIndex((p) => typeof p === "string" && p.includes(place.name));
+  if (i < 0) continue;
+  const s = parts[i] as string;
+  const at = s.indexOf(place.name);
+  parts.splice(i, 1, s.slice(0, at), place, s.slice(at + place.name.length));
+}
+---
+
+{
+  parts.map((p) =>
+    typeof p === "string" ? (
+      p
+    ) : (
+      <a href={p.url} target="_blank" class="link link-hover text-primary">{p.name}</a>
+    )
+  )
+}

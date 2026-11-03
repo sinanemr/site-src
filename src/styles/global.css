@@ -1,3 +1,22 @@
 .time-line-container>div:last-child .education__time>.education__line {
     display: none;
 }
+
+/* Navy sidebar: light hover and active states for the menu and icons. */
+.sidebar .menu li > a:hover,
+.sidebar .menu li > a:focus-visible {
+    background-color: rgb(255 255 255 / 0.08);
+    color: #ffffff;
+}
+.sidebar .menu li > a.is-active {
+    background-color: rgb(255 255 255 / 0.12);
+    color: #ffffff;
+    font-weight: 600;
+}
+.sidebar .social-icons a {
+    opacity: 0.8;
+    transition: opacity 0.15s;
+}
+.sidebar .social-icons a:hover {
+    opacity: 1;
+}

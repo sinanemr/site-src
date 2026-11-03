@@ -11,19 +11,27 @@ module.exports = {
 	},
 	plugins: [require("@tailwindcss/typography"), require("daisyui")],
 	daisyui: {
-		// Same palette as Sinan's CVs: navy for structure, slate for secondary text.
+		// Dark theme: charcoal page, near-black sidebar, light text, amber accent.
 		themes: [
 			{
 				sinan: {
-					"primary": "#1f3a5f",
-					"primary-content": "#ffffff",
-					"secondary": "#5b6676",
-					"accent": "#2f6f8f",
-					"neutral": "#1d232b",
-					"base-100": "#ffffff",
-					"base-200": "#f2f5f9",
-					"base-300": "#e3e9f1",
-					"base-content": "#1d232b",
+					"color-scheme": "dark",
+					// Amber: buttons, links, headline, timeline dots.
+					"primary": "#e0a458",
+					"primary-content": "#1a1a1a",
+					// Muted grey: dates, badges.
+					"secondary": "#9aa3ad",
+					"secondary-content": "#16181c",
+					"accent": "#e0a458",
+					"accent-content": "#1a1a1a",
+					// Sidebar and mobile header.
+					"neutral": "#16181c",
+					"neutral-content": "#d4d6da",
+					// Page, cards and borders.
+					"base-100": "#1e2126",
+					"base-200": "#262a30",
+					"base-300": "#343941",
+					"base-content": "#e6e6e6",
 					"--rounded-btn": "0.5rem",
 				},
 			},

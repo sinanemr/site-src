@@ -8,8 +8,10 @@ Every fact matches the CVs; change a fact in the CVs first, then here.
 
 ## Replace the placeholder images
 - `public/profile.webp`: your photo (square, at least 300 × 300 px).
-- `public/projects/*.webp`: one image per project (750 × 422 px works best). Keep the file names, or change
-  the `img` path in `src/data/site.ts`. GIFs work too: name them e.g. `hpu.gif` and update the path.
+- `public/projects/`: one picture or short video per project. Put the file there and set the project's `img`
+  in `src/data/site.ts`, e.g. `img: "/projects/hpu.jpg"` or `img: "/projects/hpu.mp4"`.
+  - Pictures: `.jpg`, `.png`, `.webp` or `.gif`, about 800 × 800 px. Any shape works; it is cropped from the centre to a square.
+  - Videos: `.mp4` (or `.webm`), 5–15 s, no sound needed (they play muted on a loop), ideally under 5 MB.
 - `public/social_img.webp`: the preview picture shown when the link is shared.
 - `public/Sinan_Emre_CV*.pdf`: replace when the CVs change.
 

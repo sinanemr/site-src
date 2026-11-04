@@ -1,6 +1,8 @@
 ---
-const { title, img, full, desc, url, badge, tags, target = "_blank" } = Astro.props;
-const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
+import { PROFILE, type Project } from "../data/site";
+
+const { project } = Astro.props as { project: Project };
+const { title, authors, venue, year, img, full, previewRem, url, links, desc } = project;
 
 // `img` can be a picture (.jpg .png .webp .gif) or a short video (.mp4 .webm).
 // In the card it is cropped from the centre to a square tile.
@@ -26,52 +28,74 @@ const titleCase = (s: string) =>
     )
     .join(" ");
 const heading = titleCase(title);
+
+// Separator placed after the author at position i: "A, B, and C" or "A and B".
+const separator = (i: number) => {
+  const last = authors.length - 1;
+  if (i === last) return "";
+  if (i === last - 1) return authors.length > 2 ? ", and " : " and ";
+  return ", ";
+};
+
+const buttonClass = "btn btn-xs btn-outline uppercase font-medium";
 ---
 
 <div
+  data-project
   class="relative hover:z-10 rounded-xl bg-base-200 border border-base-300 shadow-sm hover:shadow-lg hover:border-primary/40 transition ease-in-out"
 >
-  <a href={url} target={target}>
-    <div class="hero-content flex-col md:flex-row">
-      {
-        img && (
-          <div class="group/media relative shrink-0 w-full max-w-[18rem] md:w-44">
-            {isVideo(img) ? (
-              <video src={img} class="w-full aspect-square object-cover rounded-lg bg-base-300" autoplay muted loop playsinline preload="metadata" aria-label={title} />
-            ) : (
-              <img src={img} alt={title} class="w-full aspect-square object-cover rounded-lg bg-base-300" loading="lazy" decoding="async" />
-            )}
+  <div class="hero-content flex-col md:flex-row md:items-start">
+    <a href={url} target="_blank" class="group/media relative block shrink-0 w-full max-w-[18rem] md:w-44">
+      {isVideo(img) ? (
+        <video src={img} class="w-full aspect-square object-cover rounded-lg bg-base-300" autoplay muted loop playsinline preload="metadata" aria-label={title} />
+      ) : (
+        <img src={img} alt={title} class="w-full aspect-square object-cover rounded-lg bg-base-300" loading="lazy" decoding="async" />
+      )}
 
-            <div
-              class="hidden md:block pointer-events-none absolute left-0 top-1/2 z-50 w-[20rem] origin-left -translate-y-1/2 scale-90 opacity-0 transition duration-200 ease-out group-hover/media:scale-100 group-hover/media:opacity-100"
-              aria-hidden="true"
-            >
-              {isVideo(preview) ? (
-                <video src={preview} class="w-full h-auto max-h-[60vh] object-contain rounded-xl bg-white shadow-2xl ring-1 ring-black/40" autoplay muted loop playsinline preload="none" />
-              ) : (
-                <img src={preview} alt="" class="w-full h-auto max-h-[60vh] object-contain rounded-xl bg-white shadow-2xl ring-1 ring-black/40" loading="lazy" decoding="async" />
-              )}
-            </div>
-          </div>
-        )
-      }
-      <div class="grow w-full">
-        <h1 class="text-xl font-bold">
-          {heading}
-          {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
-        </h1>
-        <p class="py-1 text-1xl">{desc}</p>
-        <div class="card-actions justify-end">
-          {
-            tags &&
-              tags.map((tag) => (
-                <a href={`${tag_url}/${tag}`} class="badge badge-outline">
-                  {tag}
-                </a>
-              ))
-          }
-        </div>
+      <div
+        class="hidden md:block pointer-events-none absolute left-0 top-1/2 z-50 w-[20rem] origin-left -translate-y-1/2 scale-90 opacity-0 transition duration-200 ease-out group-hover/media:scale-100 group-hover/media:opacity-100"
+        style={previewRem ? `width: ${previewRem}rem` : undefined}
+        aria-hidden="true"
+      >
+        {isVideo(preview) ? (
+          <video src={preview} class="w-full h-auto max-h-[60vh] object-contain rounded-xl bg-white shadow-2xl ring-1 ring-black/40" autoplay muted loop playsinline preload="none" />
+        ) : (
+          <img src={preview} alt="" class="w-full h-auto max-h-[60vh] object-contain rounded-xl bg-white shadow-2xl ring-1 ring-black/40" loading="lazy" decoding="async" />
+        )}
       </div>
+    </a>
+
+    <div class="grow w-full">
+      <h3 class="text-lg font-bold leading-snug">
+        <a class="hover:text-primary transition-colors" href={url} target="_blank">{heading}</a>
+      </h3>
+      <p class="pt-1 text-sm leading-relaxed">
+        {authors.map((name, i) => (
+          <Fragment>
+            {name === PROFILE.name ? <span class="underline underline-offset-2 font-semibold">{name}</span> : name}
+            {separator(i)}
+          </Fragment>
+        ))}
+      </p>
+      <p class="text-sm italic opacity-70">{venue}, {year}</p>
+      <div class="mt-3 flex flex-wrap gap-2">
+        {desc && (
+          <button
+            type="button"
+            class={buttonClass}
+            aria-expanded="false"
+            onclick="const box = this.closest('[data-project]').querySelector('[data-about]'); const open = box.classList.toggle('hidden'); this.setAttribute('aria-expanded', String(!open));"
+          >
+            About
+          </button>
+        )}
+        {links?.map((l) => (
+          <a class={buttonClass} href={l.url} target="_blank">
+            {l.label}
+          </a>
+        ))}
+      </div>
+      {desc && <p data-about class="hidden mt-3 text-sm leading-relaxed">{desc}</p>}
     </div>
-  </a>
+  </div>
 </div>

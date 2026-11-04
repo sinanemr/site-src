@@ -7,7 +7,7 @@ All text is in **`src/data/site.ts`**: intro, robots, projects, CV timeline, ski
 Every fact matches the CVs; change a fact in the CVs first, then here.
 
 ## Replace the placeholder images
-- `public/profile.webp`: your photo (square, at least 300 × 300 px).
+- `public/profile-photo.webp`: your photo (square, at least 300 × 300 px).
 - `public/projects/`: one picture or short video per project. Put the file there and set the project's `img`
   in `src/data/site.ts`, e.g. `img: "/projects/hpu.jpg"` or `img: "/projects/hpu.mp4"`.
   - Pictures: `.jpg`, `.png`, `.webp` or `.gif`, about 800 × 800 px. Any shape works; it is cropped from the centre to a square.

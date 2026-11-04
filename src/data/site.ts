@@ -60,73 +60,117 @@ export const NEWS: NewsItem[] = [
   },
 ];
 
+// Projects are listed like publications, newest first. The Projects page groups them by `year` on its own.
+export type ProjectLink = { label: string; url: string };
+
 export type Project = {
   title: string;
-  img: string;      // square tile in the card (picture, GIF or .mp4), from public/projects/
-  full?: string;    // optional uncropped version shown when the mouse is over the tile; defaults to img
-  badge?: string;
-  desc: string;
-  url: string;
-  featured?: boolean;
+  authors: string[];      // your own name is underlined automatically
+  venue: string;
+  year: number;
+  img: string;            // square tile in the card (picture, GIF or .mp4), from public/projects/
+  full?: string;          // optional uncropped version shown when the mouse is over the tile; defaults to img
+  previewRem?: number;    // optional width of the hover preview in rem; the default is 20
+  url: string;            // where the title and the tile go
+  links?: ProjectLink[];  // small buttons under the card (DOI, arXiv, PDF, website...)
+  desc?: string;          // 2-3 sentence brief of the abstract, shown by the About button
+  featured?: boolean;     // also show on the home page
 };
 
-export const PROJECTS_IIT: Project[] = [
+export const PROJECTS: Project[] = [
   {
-    title: "Compact hydraulic power unit",
+    title: "Design and Performance Evaluation of a Compact Hydraulic Power Unit for Legged Robots",
+    authors: ["Sinan Emre", "Matteo Villa", "Victor Barasuol", "Claudio Semini"],
+    venue: "IEEE/ASME International Conference on Advanced Intelligent Mechatronics (AIM)",
+    year: 2026,
     img: "/projects/hpu-photo.webp",
     full: "/projects/hpu-full.webp",
-    badge: "AIM 2026",
-    desc: "I simulated and tested a compact hydraulic power unit and integrated it on the HyQReal2 hydraulic quadruped.",
     url: "https://doi.org/10.1109/AIM65483.2026.11658164",
+    links: [{ label: "DOI", url: "https://doi.org/10.1109/AIM65483.2026.11658164" }],
+    desc: "A compact 14 kg hydraulic power unit for legged robots, designed to operate at pressures up to 200 bar. The unit is modeled, simulated and tested on a bench at 500–3000 rpm and 100–200 bar. It exceeds 70% electrical-to-hydraulic efficiency under typical operating conditions, with a maximum measured efficiency of 73.6%.",
     featured: true,
   },
   {
-    title: "Load-based variable transmission",
+    title: "Load-Based Variable Transmission Mechanism for Robotic Applications",
+    authors: ["Sinan Emre", "Victor Barasuol", "Matteo Villa", "Claudio Semini"],
+    venue: "IEEE International Conference on Advanced Robotics (ICAR)",
+    year: 2025,
     img: "/projects/lbvt-diagram.webp",
-    badge: "ICAR 2025",
-    desc: "A passive knee mechanism with pre-tensioned torsional springs and a four-bar linkage. Under load it raises the transmission ratio by up to 40% in simulation. I built a 3D-printed prototype.",
     url: "https://doi.org/10.1109/ICAR65334.2025.11338631",
+    links: [
+      { label: "DOI", url: "https://doi.org/10.1109/ICAR65334.2025.11338631" },
+      { label: "arXiv", url: "https://arxiv.org/abs/2512.15448" },
+      { label: "PDF", url: "https://iit-dlslab.github.io/papers/emre25Icar.pdf" },
+    ],
+    desc: "A passive transmission mechanism that uses a pre-tensioned spring and a four-bar linkage to change its transmission ratio under load, with no additional actuators. Simulations show up to a 40% increase in transmission ratio once a predefined torque threshold is reached, amplifying joint torque when needed.",
     featured: true,
   },
   {
-    title: "Carpal-claw",
+    title: "Introducing the Carpal-Claw: a Mechanism to Enhance High-Obstacle Negotiation for Quadruped Robots",
+    authors: ["Victor Barasuol", "Sinan Emre", "Vivian Suzano Medeiros", "Angelo Bratta", "Claudio Semini"],
+    venue: "IEEE International Conference on Robotics and Automation (ICRA)",
+    year: 2024,
     img: "/projects/carpal-claw-video.gif",
-    badge: "ICRA 2024",
-    desc: "A mechanism that helps quadruped robots get over high obstacles. I did the mechanical design and tested it on Unitree Aliengo.",
     url: "https://sites.google.com/view/carpal-claw",
+    links: [
+      { label: "DOI", url: "https://doi.org/10.1109/ICRA57147.2024.10611337" },
+      { label: "PDF", url: "https://iit-dlslab.github.io/papers/barasuol24icra.pdf" },
+      { label: "Website", url: "https://sites.google.com/view/carpal-claw" },
+      { label: "STL files", url: "https://github.com/sinanemr/Carpal-Claw" },
+    ],
+    desc: "A new mechanism that lets quadruped robots negotiate higher obstacles under static and quasi-static locomotion and regular joint torque demands. Experiments on an Aliengo robot show it safely descending a 40 cm step, which is 80% of its leg length.",
     featured: true,
   },
   {
-    title: "Stair-climbing charts",
+    title: "Stair-Climbing Charts: On the Optimal Body Height for Quadruped Robots to Walk on Stairs",
+    authors: ["Victor Barasuol", "Sinan Emre", "Claudio Semini"],
+    venue: "International Conference on Climbing and Walking Robots (CLAWAR)",
+    year: 2023,
     img: "/projects/stairs-diagram.webp",
     full: "/projects/stairs-full.webp",
-    badge: "CLAWAR 2023",
-    desc: "What body height should a quadruped keep when it walks on stairs? I built the simulations for this study.",
     url: "https://doi.org/10.1007/978-3-031-47269-5_24",
+    links: [
+      { label: "DOI", url: "https://doi.org/10.1007/978-3-031-47269-5_24" },
+      { label: "PDF", url: "https://iit-dlslab.github.io/papers/barasuol23clawar.pdf" },
+    ],
+    desc: "A study of the robot body height that maximizes feasible footholds when walking on stairs. It introduces the Stair Climbing Charts, which give the best height from the robot's leg geometry and the stair rise and go. Charts for several well-known quadruped robots are presented and compared.",
   },
-];
-
-export const PROJECTS_OZU: Project[] = [
   {
-    title: "Compact actuator for quadrupeds",
-    img: "/projects/actuator.webp",
-    badge: "ACTUATOR 2022",
-    desc: "48 Nm continuous torque at 1.6–1.7 kg. I was the sole designer, using topology optimization and FEM.",
+    title: "Design and Development of a Compact Actuator",
+    authors: ["Sinan Emre", "Baris Akin", "Erim Can Ozcinar", "Baris Balci", "Polat Sendur", "Ozkan Bebek", "Ramazan Unal", "Barkan Ugurlu"],
+    venue: "International Conference and Exhibition on New Actuator Systems and Applications (ACTUATOR)",
+    year: 2022,
+    img: "/projects/actuator-photo.webp",
     url: "https://ieeexplore.ieee.org/document/9899230", // ACTUATOR 2022 has no DOI; this is its IEEE Xplore page
+    links: [{ label: "DOI", url: "https://ieeexplore.ieee.org/document/9899230" }],
+    desc: "A compact, lightweight actuator for legged robots, designed with topology optimization to keep weight low while delivering high torque. It provides 48 Nm of continuous torque at 1.6–1.7 kg. The optimized design was built and tested on a real quadruped robot.",
   },
   {
-    title: "12-DOF quadruped",
-    img: "/projects/quadruped.webp",
-    badge: "MSc thesis",
-    desc: "A topology-optimized quadruped driven by these actuators. I designed it on my own, and two prototypes were built and tested in gait experiments.",
+    title: "Design, development, and real-life implementation of a high power quadruped robot",
+    authors: ["Sinan Emre"],
+    venue: "MSc thesis, Özyeğin University",
+    year: 2022,
+    img: "/projects/quadruped-tile.webp",
+    full: "/projects/quadruped-both.webp",
+    previewRem: 26,
     url: "https://hdl.handle.net/10679/8061", // MSc thesis in the Özyeğin repository (theses have no DOI)
+    links: [{ label: "Thesis", url: "https://hdl.handle.net/10679/8061" }],
+    desc: "A quadruped robot with a high power-to-weight ratio, covering the design of its actuators, leg mechanisms and torso. Dynamic and finite element models guided the weight-minimizing optimization of the design. Two prototypes were built and tested in gait experiments.",
   },
   {
-    title: "CoEx lower-body exoskeleton",
-    img: "/projects/coex.webp",
-    badge: "Patent",
-    desc: "A TÜBİTAK project I worked on from the start: limb design, series elastic actuator verification, FEM and manufacturing follow-up. I'm a co-inventor on a granted US and European patent for a wearable lower extremity exoskeleton.",
-    url: "https://patents.google.com/patent/US12521298B2",
+    title: "Co-Ex: A Torque-Controllable Lower Body Exoskeleton for Dependable Human-Robot Co-existence",
+    authors: ["Mehmet C. Yildirim", "Ahmet Talha Kansizoglu", "Sinan Emre", "Mustafa Derman", "Sinan Coruk", "Ahmed Fahmy Soliman", "Polat Sendur", "Barkan Ugurlu"],
+    venue: "IEEE International Conference on Rehabilitation Robotics (ICORR)",
+    year: 2019,
+    img: "/projects/coex-photo.webp",
+    full: "/projects/coex-full.webp",
+    previewRem: 16,
+    url: "https://doi.org/10.1109/ICORR.2019.8779407",
+    links: [
+      { label: "DOI", url: "https://doi.org/10.1109/ICORR.2019.8779407" },
+      { label: "Patent", url: "https://patents.google.com/patent/US12521298B2" },
+    ],
+    desc: "An exoskeleton that aims to provide 3D walking support with a minimum number of actuators. All hip, knee and ankle actuators sit around the waist to reduce leg weight, and custom series elastic actuators provide torque control. A first prototype was built, and preliminary experiments indicated the viability of torque control.",
   },
 ];
 
